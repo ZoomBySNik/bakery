@@ -1,0 +1,71 @@
+{% block content %}
+    <div class="row row-cols-lg-6 row-cols-md-3 row-cols-sm-2">
+        {% for item in orders %}
+            <div class="col" style="margin-top: 2em">
+                <div class="card custom-card" onclick="location.href='/';">
+                    <div style="height: 50%;">
+                        <img src="{{ MEDIA_URL }}{{ item.image.url }}" class="card-img-top">
+                    </div>
+                    <div class="card-body custom-card-body">
+                        <div style="height: 18%; font-size: 0.9em">
+                            {% for tag in item.tags.all|slice:":4" %}
+                                <span class="badge rounded-pill text-bg custom-tag" style="height: 2.2em;">
+                                        <img src="{{ MEDIA_URL }}{{ tag.icon_image.url }}" class="tag-img">
+                                        {{ tag.title }}
+                                    </span>
+                            {% endfor %}
+                        </div>
+                        <div style="height: 45%">
+                            <h5 style="margin-bottom: 0.2em; margin-top: 1em">{{ item.title }}</h5>
+                            {{ item.weight }}г
+                            <div style="color: #b59285; font-weight: bold">{{ item.price }}р</div>
+                        </div>
+                        <div class="text-end" style="height: 40%">
+                            <button class="btn custom-button-pill">В корзину</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <style>
+        .custom-card-body {
+            height: 50%;
+            padding: 0.8em;
+            margin-top: -10%;
+            border-radius: 2em;
+            background: #fdefd6;
+        }
+
+        .custom-card {
+            height: auto;
+            border-radius: 2em;
+            aspect-ratio: 3/4;
+            background: #fdefd6;
+            border-style: none;
+            box-shadow: 10px 20px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-img-top {
+            width: 100%; /* заполнение ширины оболочки */
+            height: 100%; /* заполнение высоты оболочки */
+            object-fit: cover;
+            border-top-left-radius: 2em;
+            border-top-right-radius: 2em;
+        }
+
+        .tag-img {
+            width: 1.2em; /* заполнение ширины оболочки */
+            height: 1.2em;
+        }
+
+        .custom-tag {
+            border-style: solid;
+            border-width: .2em;
+            border-color: #886b39;
+            background: #fbd492;
+            color: #886b39;
+            margin-right: 0.1em;
+        }
+    </style>
+{% endblock content %}

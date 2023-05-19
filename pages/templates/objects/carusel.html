@@ -1,0 +1,48 @@
+{% block content %}
+    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            {% for item in topics %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}" style="aspect-ratio: 4/1;" location.href='/';>
+                    <img src="media/{{ MEDIA_URL }}{{ item.board_image}}" class="d-block w-100 img-in-topic">
+                    <div class="carousel-caption d-none d-md-block for-text-in-topic">
+                        <h1 class="text-in-topic">{{ item.title_for_topic }}</h1>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <style>
+        .img-in-topic{
+            width: 100%; /* заполнение ширины оболочки */
+            height: 100%; /* заполнение высоты оболочки */
+            object-fit: cover;
+            border-radius: 2rem;
+        }
+        .text-in-topic {
+            background-color: transparent; /* Прозрачный фон */
+            mix-blend-mode: difference; /* Инверсия цвета */
+            color: #f9c469; /* Цвет текста */
+        }
+
+        .for-text-in-topic {
+            display: inline-block;
+            padding: 0px;
+            min-width: 10px;
+            background-color: transparent;
+            transition: background-color 0.3s ease-in-out;
+            backdrop-filter: blur(10px);
+            border-radius: 1000px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        }
+    </style>
+{% endblock content %}

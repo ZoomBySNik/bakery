@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row expanding-div">
+    <div class="col-12" style="aspect-ratio: 3/1;">
+        <img src="{{ MEDIA_URL }}{{ topic.board_image.url}}" class="d-block w-100 img-in-topic">
+        <div class="for-text-in-topic">
+            <h1 class="text-in-topic">{{ topic.title_for_topic }}</h1>
+        </div>
+    </div>
+    <div class="col-12">
+        <p>{{ topic.description }}</p>
+    </div>
+    <div>
+        {% include 'objects/card.html' with orders=orders %}
+    </div>
+</div>
+
+<style>
+.expanding-div {
+    display: inline-flex;
+    margin-bottom: 2em;
+    /* Другие стили для div */
+  }
+.img-in-topic{
+    width: 100%; /* заполнение ширины оболочки */
+    height: 100%; /* заполнение высоты оболочки */
+    object-fit: cover;
+    border-radius: 2rem;
+}
+.text-in-topic {
+    background-color: transparent; /* Прозрачный фон */
+    mix-blend-mode: difference; /* Инверсия цвета */
+    color: #f9c469; /* Цвет текста */
+}
+
+.for-text-in-topic {
+    display: inline-block;
+    padding: 0px;
+    min-width: 10px;
+    background-color: transparent;
+    transition: background-color 0.3s ease-in-out;
+    backdrop-filter: blur(10px);
+    border-radius: 1000px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+</style>
+{% endblock %}

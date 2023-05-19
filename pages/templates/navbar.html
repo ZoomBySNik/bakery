@@ -1,0 +1,46 @@
+{% block content %}
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <div>
+            <a class="navbar-brand" href="/">
+                Добрая пекарня
+            </a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Категории
+          </a>
+          <ul class="dropdown-menu">
+              {% for item in topics %}
+                    <li><a class="dropdown-item" href="{% url 'topic' item.id %}">{{ item.title_for_topic }}</a></li>
+              {% endfor %}
+          </ul>
+        </li>
+        <li class="nav-item" >
+            <a class="nav-link" href="/products">
+                Все меню
+            </a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search" action="/products" method="GET">
+        <input class="form-control me-2" type="text" name="search" placeholder="Поиск" aria-label="Поиск">
+        <button class="btn btn-outline-success" type="submit">Поиск</button>
+      </form>
+        <button class="btn btn-info" style="margin-left: 1em">Корзина</button>
+        <button class="btn btn-info" style="margin-left: 1em">Вход</button>
+    </div>
+  </div>
+</nav>
+<style>
+        .navbar-brand{
+            background: none;
+            justify-content: center;
+            display: flex;
+            margin: auto;
+        }
+    </style>
+{% endblock content %}

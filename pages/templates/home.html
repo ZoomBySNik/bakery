@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div>
+        {% include 'objects/carusel.html' with topics=topics %}
+        <div class="title-of-section">
+            <h1 style="text-align: center">Популярные товары</h1>
+        </div>
+        {% include 'objects/card.html' with orders=orders %}
+        <div class="title-of-section"><a href="/products"><button class="btn btn-lg custom-button-pill">Хочу видеть больше</button></a></div>
+    </div>
+    <style>
+        .title-of-section{
+            margin: 2em;
+            text-align: center;
+        }
+    </style>
+{% endblock %}
