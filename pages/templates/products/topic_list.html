@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="row expanding-div">
-    <div class="col-12" style="aspect-ratio: 3/1;">
+    <div class="col-12" style="aspect-ratio: 3/1; text-align: center">
         <img src="{{ MEDIA_URL }}{{ topic.board_image.url}}" class="d-block w-100 img-in-topic">
         <div class="for-text-in-topic">
             <h1 class="text-in-topic">{{ topic.title_for_topic }}</h1>
@@ -9,6 +9,7 @@
     </div>
     <div class="col-12">
         <p>{{ topic.description }}</p>
+        <hr>
     </div>
     <div>
         {% include 'objects/card.html' with orders=orders %}
@@ -34,14 +35,16 @@
 }
 
 .for-text-in-topic {
-    display: inline-block;
-    padding: 0px;
+    display: flow;
+    padding: 1em;
     min-width: 10px;
     background-color: transparent;
     transition: background-color 0.3s ease-in-out;
     backdrop-filter: blur(10px);
     border-radius: 1000px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    margin-top: 2em;
+    margin-bottom: 2em;
 }
 </style>
 {% endblock %}

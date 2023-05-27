@@ -14,7 +14,7 @@ from django.shortcuts import get_object_or_404
 
 def home_view(request, *args, **kwargs):
     print(*args, **kwargs)
-    topics = get_topics()
+    topics = Tag.objects.all()
     orders = get_popular(6).annotate(price=F('pricelistposition__price'))
     response = {
         'orders': orders,
@@ -38,14 +38,14 @@ def product_list(request, *args, **kwargs):
             orders = orders.filter(price__lte=max_price)
         if form.cleaned_data["tags"]:
             for tag in tags:
-                orders = orders.filter(tags__id=tag)
+                orders = orders.filter(tagandproduct__tag__id=tag)
         if search_query:
             orders = orders.filter(title__icontains=search_query)
         if 'reset' in request.GET:
             return redirect('product_list')
 
     print(*args, **kwargs)
-    topics = get_topics()
+    topics = Tag.objects.all()
     products_count = Product.objects.count()
     products_count_filtered = orders.count()
     response = {
@@ -62,8 +62,8 @@ def product_list(request, *args, **kwargs):
 def topic(request, topic_id):
     topic = get_object_or_404(Tag, id=topic_id)
     orders = get_popular(None).annotate(price=F('pricelistposition__price'))
-    orders = orders.filter(tags__id=topic.id)
-    topics = get_topics()
+    orders = orders.filter(tagandproduct__tag__id=topic.id)
+    topics = Tag.objects.all()
     response = {
         'orders': orders,
         'topic': topic,
@@ -86,8 +86,3 @@ def get_popular(count):
     for product in popular_products:
         product.latest_price = latest_prices.get(product=product).price
     return popular_products
-
-
-def get_topics():
-    topics = Tag.objects.annotate(product_count=Count('product')).order_by('-product_count')
-    return topics

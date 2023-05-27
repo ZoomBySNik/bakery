@@ -7,15 +7,15 @@
                         <img src="{{ MEDIA_URL }}{{ item.image.url }}" class="card-img-top">
                     </div>
                     <div class="card-body custom-card-body">
-                        <div style="height: 18%; font-size: 0.9em">
-                            {% for tag in item.tags.all|slice:":4" %}
+                        <div style="height: 6%; font-size: 0.9em">
+                            {% for tagandproduct in item.tagandproduct_set.all|slice:":2" %}
                                 <span class="badge rounded-pill text-bg custom-tag" style="height: 2.2em;">
-                                        <img src="{{ MEDIA_URL }}{{ tag.icon_image.url }}" class="tag-img">
-                                        {{ tag.title }}
+                                        <img src="{{ MEDIA_URL }}{{ tagandproduct.tag.icon_image.url }}" class="tag-img">
+                                        {{ tagandproduct.tag.title }}
                                     </span>
                             {% endfor %}
                         </div>
-                        <div style="height: 45%">
+                        <div style="height: 60%">
                             <h5 style="margin-bottom: 0.2em; margin-top: 1em">{{ item.title }}</h5>
                             {{ item.weight }}г
                             <div style="color: #b59285; font-weight: bold">{{ item.price }}р</div>

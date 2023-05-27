@@ -110,7 +110,6 @@ class Product(models.Model):
     description = models.TextField(verbose_name='Описание')
     weight = models.IntegerField(null=False, blank=False, verbose_name='Вес (гр.)')
     image = models.ImageField(null=True, blank=True, upload_to='products_img/')
-    tags = models.ManyToManyField('Tag', verbose_name='Теги')
 
     def __str__(self):
         return '%s' % (self.title)
@@ -128,7 +127,6 @@ class TagAndProduct(models.Model):
         return '%s %s' % (self.product, self.tag)
 
     class Meta:
-        db_table = 'products_product_tag'
         verbose_name = 'Тег и продукт'
         verbose_name_plural = 'Теги и продукты'
         unique_together = ('product', 'tag')
