@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models import Count, Subquery, OuterRef, Max
 from django.utils import timezone
 from datetime import datetime
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from products.models import *
-from .forms import FilterForProducts
+from .forms import *
 from django.db.models import F
 from decimal import Decimal
 from django.shortcuts import get_object_or_404
@@ -86,3 +86,15 @@ def get_popular(count):
     for product in popular_products:
         product.latest_price = latest_prices.get(product=product).price
     return popular_products
+
+
+def register_customer(request):
+    if request.method == 'POST':
+        form = CustomerRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/')  # Перенаправление на главную страницу после успешной регистрации
+    else:
+        form = CustomerRegistrationForm()
+
+    return render(request, 'registration/register.html', {'form': form})

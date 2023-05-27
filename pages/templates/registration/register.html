@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Регистрация</title>
+</head>
+<body>
+<h2>Регистрация</h2>
+<form method="POST" action="{% url 'register' %}">
+    {% csrf_token %}
+    <div style="width: 40%;">
+        {{ form.first_name.label_tag }} {{ form.first_name }}
+        <hr>
+        {{ form.last_name.label_tag }} {{ form.last_name }}
+        <hr>
+        {{ form.phone_number.label_tag }} {{ form.phone_number }}
+        <hr>
+        {{ form.username.label_tag }} {{ form.username }}
+        <hr>
+        {{ form.password1.label_tag }} {{ form.password1 }}
+        <hr>
+        {{ form.password2.label_tag }} {{ form.password2 }}
+        <hr>
+    </div>
+
+    <button type="submit">Зарегистрироваться</button>
+</form>
+</body>
+</html>

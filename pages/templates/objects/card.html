@@ -9,10 +9,10 @@
                     <div class="card-body custom-card-body">
                         <div style="height: 6%; font-size: 0.9em">
                             {% for tagandproduct in item.tagandproduct_set.all|slice:":2" %}
-                                <span class="badge rounded-pill text-bg custom-tag" style="height: 2.2em;">
+                                <a class="badge rounded-pill text-bg custom-tag" style="height: 2.2em;" href="{% url 'topic' tagandproduct.tag.id %}">
                                         <img src="{{ MEDIA_URL }}{{ tagandproduct.tag.icon_image.url }}" class="tag-img">
                                         {{ tagandproduct.tag.title }}
-                                    </span>
+                                    </a>
                             {% endfor %}
                         </div>
                         <div style="height: 60%">
@@ -21,7 +21,9 @@
                             <div style="color: #b59285; font-weight: bold">{{ item.price }}р</div>
                         </div>
                         <div class="text-end" style="height: 40%">
-                            <button class="btn custom-button-pill">В корзину</button>
+                            {% if request.user.is_authenticated %}
+                                <button class="btn custom-button-pill">В корзину</button>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -66,6 +68,7 @@
             background: #fbd492;
             color: #886b39;
             margin-right: 0.1em;
+            text-decoration: none;
         }
     </style>
 {% endblock content %}

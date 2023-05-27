@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Вход</title>
+</head>
+<body>
+    <h2>Вход</h2>
+    <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        {{ form.username.label_tag }} {{ form.username }}
+        <br>
+        {{ form.password.label_tag }} {{ form.password }}
+        <br>
+        {% if form.errors %}
+            <p>Неверное имя пользователя или пароль. Попробуйте снова.</p>
+        {% endif %}
+        <button type="submit">Войти</button>
+    </form>
+</body>
+</html>
