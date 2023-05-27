@@ -93,7 +93,7 @@ def register_customer(request):
         form = CustomerRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/')  # Перенаправление на главную страницу после успешной регистрации
+            return redirect('/login')  # Перенаправление на главную страницу после успешной регистрации
     else:
         form = CustomerRegistrationForm()
 
