@@ -4,9 +4,9 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 class FilterForProducts(forms.Form):
-    min_price = forms.IntegerField(label='от', required=False)
-    max_price = forms.IntegerField(label='до', required=False)
-    tags = forms.MultipleChoiceField(label='фильтры', widget=forms.CheckboxSelectMultiple, required=False)
+    min_price = forms.IntegerField(label='Цена от', required=False)
+    max_price = forms.IntegerField(label='Цена до', required=False)
+    tags = forms.MultipleChoiceField(label='Разделы', widget=forms.CheckboxSelectMultiple, required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -21,3 +21,9 @@ class CustomerRegistrationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = Customer
         fields = UserCreationForm.Meta.fields + ('phone_number', 'first_name', 'last_name')
+
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['date_of_delivery', 'address_of_delivery', 'type_of_payment', 'commentary_for_order']

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Наименование</th>
+                    <th scope="col">Цена за единицу</th>
+                    <th scope="col">Количество</th>
+                    <th scope="col">Итог за строку</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for product in products %}
+                    <tr>
+                        <th scope="row">{{ product.product.title }}</th>
+                        <th>{{ product.price }} руб.</th>
+                        <th>
+                            <a class="btn custom-button-pill" href="{% url 'sub_from_cart' product.id %}">-</a>
+                            {{ product.count }} {{ product.units }}
+                            <a class="btn custom-button-pill" href="{% url 'add_to_cart' product.id %}">+</a>
+                        </th>
+                        <th>{% widthratio product.count 1 product.price %} руб.</th>
+                    </tr>
+                {% endfor %}
+                    <tr>
+                        <th scope="row"><b>Итог</b></th>
+                        <th></th>
+                        <th></th>
+                        <th><b>{{ total_price }} руб.</b></th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <hr>
+        <div class="row">
+            <form method="post" action="{% url 'checkout' %}">
+                {% csrf_token %}
+                <div class="container">
+                    <div class="row roww">
+                        <div class="col">
+                            <label for="delivery_date">Дата доставки:</label>
+                        </div>
+                        <div class="col">
+                            <input type="date" name="delivery_date" id="delivery_date" required>
+                        </div>
+                    </div>
+                    <div class="row roww">
+                        <div class="col">
+                            <label for="delivery_address">Адрес доставки:</label>
+                        </div>
+                        <div class="col">
+                            <input type="text" name="delivery_address" id="delivery_address" required>
+                        </div>
+                    </div>
+                    <div class="row roww">
+                        <div class="col">
+                            <label for="payment_type">Тип оплаты:</label>
+                        </div>
+                        <div class="col">
+                            {% for payment_type in payment_types %}
+                    {{ payment_type.name }}<input type="radio" name="{{ payment_type.name }}" id="payment_type">
+                {% endfor %}
+                        </div>
+                    </div>
+                    <div class="row roww">
+                        <div class="col">
+                            <label for="order_comment">Комментарий к заказу:</label>
+                        </div>
+                        <div class="col">
+                            <textarea name="order_comment" id="order_comment"></textarea>
+                        </div>
+                    </div>
+                    <div class="row roww">
+                        <button type="submit" class="btn custom-button-pill">Оформить заказ</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <style>
+        .roww{
+            padding: 1em 1em 1em 0em;
+            margin-right: 40%;
+        }
+    </style>
+{% endblock %}

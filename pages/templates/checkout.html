@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form method="post" action="{% url 'checkout' %}">
+        {% csrf_token %}
+
+        <label for="delivery_date">Дата доставки:</label>
+        <input type="date" name="delivery_date" id="delivery_date" required>
+
+        <label for="delivery_address">Адрес доставки:</label>
+        <input type="text" name="delivery_address" id="delivery_address" required>
+
+        <label for="payment_type">Тип оплаты:</label>
+        {% for payment_type in payment_types %}
+        {{ payment_type.name }}<input type="radio" name="{{ payment_type.name }}" id="payment_type">
+        {% endfor %}
+
+        <label for="order_comment">Комментарий к заказу:</label>
+        <textarea name="order_comment" id="order_comment"></textarea>
+
+        <button type="submit">Оформить заказ</button>
+    </form>
+{% endblock %}
