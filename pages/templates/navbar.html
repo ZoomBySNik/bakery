@@ -31,6 +31,9 @@
         <button class="btn btn-outline-success" type="submit">Поиск</button>
       </form>
         {% if request.user.is_authenticated %}
+            {% if orders_for_check %}
+                <a class="btn btn-info" style="margin-left: 1em" href="{% url 'orders' %}">Заказы</a>
+            {% endif %}
             {% if cart %}
                 <a class="btn btn-info" style="margin-left: 1em" href="{% url 'cart' %}">Корзина</a>
             {% endif %}

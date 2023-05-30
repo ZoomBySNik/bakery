@@ -24,52 +24,55 @@
                         <th>{% widthratio product.count 1 product.price %} руб.</th>
                     </tr>
                 {% endfor %}
-                    <tr>
-                        <th scope="row"><b>Итог</b></th>
-                        <th></th>
-                        <th></th>
-                        <th><b>{{ total_price }} руб.</b></th>
-                    </tr>
+                <tr>
+                    <th scope="row"><b>Итог</b></th>
+                    <th></th>
+                    <th></th>
+                    <th><b>{{ total_price }} руб.</b></th>
+                </tr>
                 </tbody>
             </table>
         </div>
         <hr>
         <div class="row">
-            <form method="post" action="{% url 'checkout' %}">
+            <form method="post" action="">
                 {% csrf_token %}
                 <div class="container">
                     <div class="row roww">
                         <div class="col">
-                            <label for="delivery_date">Дата доставки:</label>
+                            <label for="date_of_delivery">Дата доставки:</label>
                         </div>
                         <div class="col">
-                            <input type="date" name="delivery_date" id="delivery_date" required>
-                        </div>
-                    </div>
-                    <div class="row roww">
-                        <div class="col">
-                            <label for="delivery_address">Адрес доставки:</label>
-                        </div>
-                        <div class="col">
-                            <input type="text" name="delivery_address" id="delivery_address" required>
+                            <input type="date" name="date_of_delivery" id="date_of_delivery" required>
                         </div>
                     </div>
                     <div class="row roww">
                         <div class="col">
-                            <label for="payment_type">Тип оплаты:</label>
+                            <label for="address_of_delivery">Адрес доставки:</label>
                         </div>
                         <div class="col">
-                            {% for payment_type in payment_types %}
-                    {{ payment_type.name }}<input type="radio" name="{{ payment_type.name }}" id="payment_type">
-                {% endfor %}
+                            <input type="text" name="address_of_delivery" id="address_of_delivery" required>
                         </div>
                     </div>
                     <div class="row roww">
                         <div class="col">
-                            <label for="order_comment">Комментарий к заказу:</label>
+                            <label for="type_of_payment">Тип оплаты:</label>
                         </div>
                         <div class="col">
-                            <textarea name="order_comment" id="order_comment"></textarea>
+                                {% for payment_type in payment_types %}
+                                    <p>
+                                    <input type="radio" name="type_of_payment" id="type_of_payment" value="{{ payment_type.id }}">
+                                    {{ payment_type.name }}
+                                    </p>
+                                {% endfor %}
+                        </div>
+                    </div>
+                    <div class="row roww">
+                        <div class="col">
+                            <label for="commentary_for_order">Комментарий к заказу:</label>
+                        </div>
+                        <div class="col">
+                            <textarea name="commentary_for_order" id="commentary_for_order"></textarea>
                         </div>
                     </div>
                     <div class="row roww">
@@ -80,7 +83,7 @@
         </div>
     </div>
     <style>
-        .roww{
+        .roww {
             padding: 1em 1em 1em 0em;
             margin-right: 40%;
         }

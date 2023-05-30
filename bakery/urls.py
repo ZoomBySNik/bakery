@@ -31,11 +31,12 @@ urlpatterns = [
 
     path('register/', views.register_customer, name='register'),
     path('login/', v.LoginView.as_view(next_page='home'), name='login'),
-    path('logout/', v.LogoutView.as_view(next_page='login'), name='logout'),
+    path('logout/', views.logout_view, name='logout'),
 
     path('cart/', views.cart, name='cart'),
     path('add-to-cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
     path('sub-from-cart/<int:product_id>/', views.substract_from_cart, name='sub_from_cart'),
-    path('checkout/', views.checkout, name='checkout'),
+
+    path('orders/', views.order_view, name='orders')
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -11,6 +11,7 @@ from django.db.models import F
 from decimal import Decimal
 from django.shortcuts import get_object_or_404
 from django.core import serializers
+from django.contrib.auth import logout
 # Create your views here.
 
 
@@ -101,6 +102,13 @@ def register_customer(request):
     return render(request, 'registration/register.html', {'form': form})
 
 
+def logout_view(request):
+    logout(request)
+    response = redirect('home')  # перенаправьте пользователя на нужную страницу
+    response.delete_cookie('cart')  # удаляет COOKIE файл 'cart'
+    return response
+
+
 def add_to_cart(request, product_id):
     cart = request.COOKIES.get('cart', '')
     ids = cart.split(',')
@@ -180,39 +188,62 @@ def cart(request):
             product.count = counts[product_ids.index(product.id)] if product.id in product_ids else 0
         total_price = sum(product.price*product.count for product in products)
 
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            user = request.user
+            customer = Customer.objects.get(user_ptr_id=user)
+            order = Order.objects.create(
+
+                customer=customer,
+                date_of_delivery=form.cleaned_data['date_of_delivery'],
+                address_of_delivery=form.cleaned_data['address_of_delivery'],
+                total_price=0,
+                type_of_payment=form.cleaned_data['type_of_payment'],
+                commentary_for_order=form.cleaned_data['commentary_for_order']
+            )
+            order.save()
+            for product in products:
+                order_position = OrderPosition.objects.create(
+                    order=order,
+                    price_list_position=product,
+                    count_of_products=product.count,
+                    price_of_position=product.price*product.count
+                )
+                order.total_price += order_position.price_of_position
+                order.save()
+                order_position.save()
+            response = redirect('home')
+            response.delete_cookie('cart')
+            return response
+        else:
+            print(form.errors)
+    else:
+        form = OrderForm()
+
     context = {
         'products': products,
         'total_price': total_price,
         'payment_types': payment_types,
+        'form': form,
     }
     context = context | context_for_navbar(request)
 
     return render(request, 'cart.html', context)
 
 
-def checkout(request):
-    payment_types = TypeOfPayment.objects.all()
-    if request.method == 'POST':
-        form = OrderForm(request.POST)
-        if form.is_valid():
-            # Обработка данных формы и создание заказа
-            # ...
-            # После успешного создания заказа, очищаем корзину
-            response = redirect('cart')
-            response.delete_cookie('cart')
-            return response
-    else:
-        form = OrderForm()
-
-    context = {
-        'form': form,
-        'payment_types': payment_types,
+def order_view(request):
+    orders = Order.objects.filter(customer=request.user.id).order_by('-time_of_order')
+    response = {
+        'orders': orders
     }
-    context = context | context_for_navbar(request)
-    return render(request, 'checkout.html', context)
+    response = response | context_for_navbar(request)
+
+    return render(request, "orders.html", response)
 
 
 def context_for_navbar(request):
     cart = request.COOKIES.get('cart', '')
     topics = Tag.objects.all()
-    return {'cart': cart, 'topics': topics}
+    orders_for_check = Order.objects.filter(customer=request.user.id)
+    return {'cart': cart, 'topics': topics, 'orders_for_check': orders_for_check}

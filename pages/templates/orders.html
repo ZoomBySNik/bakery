@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+    <h2>Ваши заказы {{ user.get_full_name }}</h2>
+        {% for order in orders %}
+            <div class="row">
+                <h5>Заказ #{{ forloop.counter }} от {{ order.time_of_order }}</h5>
+                <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Наименование</th>
+                    <th scope="col">Цена за единицу</th>
+                    <th scope="col">Количество</th>
+                    <th scope="col">Итог за строку</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for order_position in order.orderposition_set.all %}
+                    <tr>
+                        <th scope="row">{{ order_position.price_list_position.product.title }}</th>
+                        <th>{{ order_position.price_list_position.price }} руб.</th>
+                        <th>
+                            {{ order_position.count_of_products }} {{ order_position.price_list_position.units }}
+                        </th>
+                        <th>{{ order_position.price_of_position }} руб.</th>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <th scope="row"><b>Итог</b></th>
+                    <th></th>
+                    <th></th>
+                    <th><b>{{ order.total_price }} руб.</b></th>
+                </tr>
+                </tbody>
+                </table>
+            {% for order_status in order.orderandstate_set.all %}
+                <p>{{ order_status.state_of_order }}</p>
+            {% endfor %}
+            <p>Дата доставки {{ order.date_of_delivery }}</p>
+            </div>
+        {% endfor %}
+
+    <style>
+        .roww {
+            padding: 1em 1em 1em 0em;
+            margin-right: 40%;
+        }
+    </style>
+{% endblock %}
