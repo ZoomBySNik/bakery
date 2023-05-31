@@ -1,1 +1,43 @@
-<h3>Footer</h3>
+{% block content %}
+    <div class="footer">
+        <div>
+            <a href="/" class="footer-logo-borders">Добрая пекарня</a>
+        </div>
+        <div class="footer-txt">
+            <p><i class="bi bi-telephone"></i>+7(911)597-14-51</p>
+            <p><i class="bi bi-envelope"></i>dobryaya@yandex.ru</p>
+            <p><i class="bi bi-globe"></i>http://www.dobryaya.ru</p>
+        </div>
+        <div class="footer-txt">
+            <p><i class="bi bi-code-slash"></i>Developer: ZoomBySNik</p>
+            <p><i class="bi bi-brush"></i>Designer: red_dragon</p>
+
+        </div>
+    </div>
+{% endblock content %}
+<style>
+    .footer{
+        display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1em 4em;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.05);
+    }
+    .footer-logo-borders{
+            border-style: solid;
+            border-radius: 1000px;
+            border-width: 0.09em;
+            padding: 0.3rem 0.3rem;
+            line-height: 0.9rem;
+            font-size: 1.4em;
+            font-weight: 100;
+            text-decoration: none;
+            color: inherit;
+            margin-right: 3em;
+    }
+    .footer-txt p{
+        margin-bottom: 0em;
+    }
+
+</style>
