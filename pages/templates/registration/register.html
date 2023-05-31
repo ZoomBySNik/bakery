@@ -2,24 +2,78 @@
 <html>
 <head>
     <title>Регистрация</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f2f2f2;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        form label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        form input[type="text"],
+        form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+
+        form button[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        @media only screen and (max-width: 480px) {
+            form {
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
 <h2>Регистрация</h2>
 <form method="POST" action="{% url 'register' %}">
     {% csrf_token %}
     <div style="width: 40%;">
-        {{ form.first_name.label_tag }} {{ form.first_name }}
-        <hr>
-        {{ form.last_name.label_tag }} {{ form.last_name }}
-        <hr>
-        {{ form.phone_number.label_tag }} {{ form.phone_number }}
-        <hr>
-        {{ form.username.label_tag }} {{ form.username }}
-        <hr>
-        {{ form.password1.label_tag }} {{ form.password1 }}
-        <hr>
-        {{ form.password2.label_tag }} {{ form.password2 }}
-        <hr>
+        <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+        {{ form.first_name }}
+        <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+        {{ form.last_name }}
+        <label for="{{ form.phone_number.id_for_label }}">{{ form.phone_number.label }}</label>
+        {{ form.phone_number }}
+        <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+        {{ form.username }}
+        <label for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
+        {{ form.password1 }}
+        <label for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
+        {{ form.password2 }}
     </div>
 
     <button type="submit">Зарегистрироваться</button>

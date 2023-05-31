@@ -2,17 +2,85 @@
 <html>
 <head>
     <title>Вход</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f2f2f2;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 2em;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        form label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        form input[type="text"],
+        form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            margin-right: 2em;
+        }
+
+        form p.error-message {
+            color: red;
+            margin: 10px 0;
+        }
+
+        form button[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        form a {
+            display: block;
+            margin-top: 10px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        @media only screen and (max-width: 480px) {
+            form {
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
     <h2>Вход</h2>
     <form method="POST" action="{% url 'login' %}">
         {% csrf_token %}
-        {{ form.username.label_tag }} {{ form.username }}
+        <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+        {{ form.username }}
         <br>
-        {{ form.password.label_tag }} {{ form.password }}
+        <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+        {{ form.password }}
         <br>
         {% if form.errors %}
-            <p>Неверное имя пользователя или пароль. Попробуйте снова.</p>
+            <p class="error-message">Неверное имя пользователя или пароль. Попробуйте снова.</p>
         {% endif %}
         <button type="submit">Войти</button>
         <a href="{% url 'register' %}">Создать учетную запись</a>
